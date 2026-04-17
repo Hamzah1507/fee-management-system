@@ -1,0 +1,11 @@
+{
+  "/api/frankfurter": {
+    "target": "https://api.frankfurter.app",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/frankfurter": ""
+    },
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

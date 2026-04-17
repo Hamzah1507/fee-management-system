@@ -10,6 +10,7 @@ import { CollectFeeComponent } from './pages/collect-fee/collect-fee.component';
 import { PaymentHistoryComponent } from './pages/payment-history/payment-history.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { ImportStudentsComponent } from './pages/import-students/import-students.component';
+import { CurrencyRatesComponent } from './pages/currency-rates/currency-rates';
 import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -24,5 +25,6 @@ export const routes: Routes = [
   { path: 'payments/:id', component: PaymentHistoryComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard] },
   { path: 'analytics', component: AnalyticsComponent, canActivate: [AuthGuard] },
+  { path: 'currency-rates', component: CurrencyRatesComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];

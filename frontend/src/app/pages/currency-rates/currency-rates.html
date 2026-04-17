@@ -1,0 +1,74 @@
+<div class="currency-wrapper">
+  <div class="currency-content">
+    <app-topbar title="Currency Rates"></app-topbar>
+
+    <div class="currency-body">
+      <div class="page-header">
+        <div class="header-left">
+          <h2>Currency Rates</h2>
+        </div>
+        <button class="refresh-btn" (click)="fetchRates()" [disabled]="loading">
+          <span [class.spinning]="loading">🔄</span>
+        </button>
+      </div>
+
+      <div class="main-card">
+        <div class="base-info">
+          <div class="base-flag">{{ currencyMeta[baseCurrency]?.flag }}</div>
+          <div class="base-text">
+            <p class="base-label">{{ currencyMeta[baseCurrency]?.name }} ({{ baseCurrency }})</p>
+            <h1 class="base-value">
+              {{ baseCurrency === 'INR' ? '₹' : baseCurrency === 'USD' ? '$' : baseCurrency === 'EUR' ? '€' : '' }} 1.00
+            </h1>
+          </div>
+        </div>
+        <div class="update-status">
+          <span class="status-dot"></span>
+          Updated {{ formatTime(lastUpdated) }}
+        </div>
+      </div>
+
+      <div class="quick-switches">
+        <button *ngFor="let b of ['INR', 'USD', 'EUR', 'GBP']" (click)="switchBase(b)"
+          [class.active]="baseCurrency === b">
+          {{ currencyMeta[b]?.flag }} {{ b }}
+        </button>
+      </div>
+
+      <div class="api-info">
+        <div class="info-icon">🌐</div>
+        <p>Data fetched live from <strong>frankfurter.app</strong> (REST API)</p>
+      </div>
+
+      <div class="rates-section">
+        <h3 class="section-subtitle">1 {{ baseCurrency }} equals</h3>
+
+        <div class="rates-list">
+
+          <!-- Loading state -->
+          <div *ngIf="loading" class="loading-state">
+            Fetching latest rates...
+          </div>
+
+          <!-- Empty state -->
+          <div *ngIf="!loading && rates.length === 0" class="loading-state">
+            ⚠️ No conversion data found for this currency.
+          </div>
+
+          <!-- ✅ THIS is the fix: only render when NOT loading -->
+          <ng-container *ngIf="!loading && rates.length > 0">
+            <div class="rate-item" *ngFor="let r of rates" (click)="switchBase(r.code)">
+              <div class="rate-flag">{{ r.flag }}</div>
+              <div class="rate-info">
+                <span class="rate-code">{{ r.code }}</span>
+                <span class="rate-name">{{ r.name }}</span>
+              </div>
+              <div class="rate-value">{{ r.rate | number:'1.2-4' }}</div>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
