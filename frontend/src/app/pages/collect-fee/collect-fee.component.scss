@@ -1,0 +1,268 @@
+.collect-wrapper {
+  min-height: 100vh;
+  background: #f4f6fb;
+  padding: 28px 32px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.loading-screen {
+  text-align: center;
+  padding: 80px;
+  color: #94a3b8;
+}
+
+.collect-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
+}
+
+.back-btn {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #3b5fc0;
+    color: #3b5fc0;
+  }
+}
+
+/* STUDENT SUMMARY */
+.student-summary {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1e3a8a, #3b5fc0);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summary-info {
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 4px 0;
+  }
+  p {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0;
+  }
+}
+
+/* FEE STATUS */
+.fee-status-card {
+  background: linear-gradient(135deg, #1e3a8a, #3b5fc0);
+  border-radius: 18px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(30,58,138,0.25);
+}
+
+.fee-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.fee-label {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0 0 4px 0;
+}
+
+.fee-val {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+
+  &.paid    { color: #86efac; }
+  &.pending { color: #fca5a5; }
+}
+
+.progress-track {
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #86efac;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+}
+
+.progress-label {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* FULLY PAID */
+.fully-paid-msg {
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* FORM */
+.collect-form-card {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 20px 0;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+  }
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #3b5fc0;
+  }
+}
+
+/* METHOD OPTIONS */
+.method-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.method-btn {
+  padding: 8px 16px;
+  border-radius: 99px;
+  border: 1.5px solid #e2e8f0;
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #3b5fc0;
+    color: #3b5fc0;
+  }
+
+  &.active {
+    background: #1e3a8a;
+    border-color: #1e3a8a;
+    color: white;
+  }
+}
+
+.error-msg {
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.success-msg {
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #1e3a8a, #3b5fc0);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(30,58,138,0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

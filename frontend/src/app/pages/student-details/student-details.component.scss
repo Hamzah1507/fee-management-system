@@ -1,0 +1,368 @@
+.details-wrapper {
+  min-height: 100vh;
+  background: #f4f6fb;
+  padding: 28px 32px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+.loading-screen {
+  text-align: center;
+  padding: 80px;
+  color: #94a3b8;
+}
+
+.details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* HEADER */
+.details-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 4px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
+}
+
+.back-btn {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #f8fafc;
+    border-color: #3b5fc0;
+    color: #3b5fc0;
+  }
+}
+
+/* PROFILE CARD */
+.profile-card {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.avatar-paid    { background: linear-gradient(135deg, #16a34a, #4ade80); }
+.avatar-partial { background: linear-gradient(135deg, #d97706, #fbbf24); }
+.avatar-pending { background: linear-gradient(135deg, #dc2626, #f87171); }
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.profile-meta {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 99px;
+}
+
+.badge-paid    { background: #dcfce7; color: #16a34a; }
+.badge-partial { background: #fef3c7; color: #d97706; }
+.badge-pending { background: #fee2e2; color: #dc2626; }
+
+/* FEE SUMMARY */
+.fee-summary-card {
+  background: linear-gradient(135deg, #1e3a8a, #3b5fc0);
+  border-radius: 18px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(30,58,138,0.25);
+}
+
+.summary-title {
+  font-size: 13px;
+  opacity: 0.8;
+  margin: 0 0 16px 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.summary-label {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0 0 4px 0;
+}
+
+.summary-value {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.paid-val    { color: #86efac; }
+.pending-val { color: #fca5a5; }
+
+.progress-track {
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+}
+
+.fill-paid    { background: #86efac; }
+.fill-partial { background: #fbbf24; }
+.fill-pending { background: #f87171; }
+
+.progress-label {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* INFO TILES */
+.info-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.info-tile {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tile-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.tile-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.email-val {
+  font-size: 13px !important;
+  word-break: break-all;
+}
+
+.tile-label {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ACTIONS */
+.actions-section {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 16px 0;
+  }
+}
+
+.action-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #1e3a8a, #3b5fc0);
+  color: white;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(30,58,138,0.3);
+  }
+}
+
+.action-btn.secondary {
+  background: #f8fafc;
+  color: #475569;
+  border: 1.5px solid #e2e8f0;
+
+  &:hover {
+    background: #f1f5f9;
+    border-color: #3b5fc0;
+    color: #3b5fc0;
+  }
+}
+
+/* DELETE MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-box {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.modal-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.modal-box h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+}
+
+.modal-box p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-cancel {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: #f8fafc; }
+}
+
+.modal-confirm {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #dc2626;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) { background: #b91c1c; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+/* DELETE BUTTON IN HEADER */
+.delete-btn {
+  margin-left: auto;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: #fecaca; }
+}
+
+/* DANGER ACTION BUTTON */
+.action-btn.danger {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1.5px solid #fecaca;
+
+  &:hover {
+    background: #fecaca;
+    border-color: #dc2626;
+  }
+}

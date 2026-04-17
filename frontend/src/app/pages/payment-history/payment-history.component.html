@@ -1,0 +1,53 @@
+<div class="history-wrapper">
+
+  <div *ngIf="loading" class="loading-screen">Loading...</div>
+
+  <div *ngIf="!loading" class="history-page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h2>Payment History</h2>
+    </div>
+
+    <!-- STUDENT INFO -->
+    <div class="student-bar" *ngIf="student">
+      <strong>{{ student.name }}</strong>
+      <span>{{ student.course }}</span>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary-card">
+      <div class="summary-item">
+        <p class="s-label">Total Transactions</p>
+        <p class="s-value">{{ payments.length }}</p>
+      </div>
+      <div class="divider"></div>
+      <div class="summary-item">
+        <p class="s-label">Total Collected</p>
+        <p class="s-value green">₹{{ getTotalPaid() }}</p>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" *ngIf="payments.length === 0">
+      No payments recorded yet.
+    </div>
+
+    <!-- PAYMENT LIST -->
+    <div class="payment-list" *ngIf="payments.length > 0">
+      <div class="payment-item" *ngFor="let p of payments; let i = index">
+        <div class="payment-left">
+          <div class="method-icon">{{ getMethodIcon(p.paymentMethod) }}</div>
+          <div class="payment-info">
+            <p class="payment-method">{{ p.paymentMethod || 'Cash' }}</p>
+            <p class="payment-date">{{ p.createdAt | date:'d MMM yyyy, h:mm a' }}</p>
+            <p class="receipt-no">Receipt #{{ p.receiptNumber }}</p>
+          </div>
+        </div>
+        <div class="payment-amount">+₹{{ p.amount }}</div>
+      </div>
+    </div>
+
+  </div>
+</div>

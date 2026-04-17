@@ -1,0 +1,93 @@
+<div class="collect-wrapper">
+
+  <div *ngIf="loading" class="loading-screen">Loading...</div>
+
+  <div *ngIf="!loading && student" class="collect-page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h2>Collect Fee</h2>
+    </div>
+
+    <!-- STUDENT SUMMARY -->
+    <div class="student-summary">
+      <div class="avatar">{{ getInitials(student.name) }}</div>
+      <div class="summary-info">
+        <h3>{{ student.name }}</h3>
+        <p>{{ student.course }}<span *ngIf="student.semester"> · Sem {{ student.semester }}</span></p>
+      </div>
+    </div>
+
+    <!-- FEE STATUS -->
+    <div class="fee-status-card">
+      <div class="fee-row">
+        <div class="fee-item">
+          <p class="fee-label">Total Fees</p>
+          <p class="fee-val">₹{{ student.totalFees || 0 }}</p>
+        </div>
+        <div class="fee-item">
+          <p class="fee-label">Paid</p>
+          <p class="fee-val paid">₹{{ student.paidFees || 0 }}</p>
+        </div>
+        <div class="fee-item">
+          <p class="fee-label">Remaining</p>
+          <p class="fee-val pending">₹{{ getPending() }}</p>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="getPaidPercent()"></div>
+      </div>
+      <p class="progress-label">{{ getPaidPercent() }}% collected</p>
+    </div>
+
+    <!-- ALREADY FULLY PAID -->
+    <div class="fully-paid-msg" *ngIf="getPending() === 0">
+      ✅ This student has fully paid their fees!
+    </div>
+
+    <!-- COLLECT FORM -->
+    <div class="collect-form-card" *ngIf="getPending() > 0">
+      <h3>Enter Payment Details</h3>
+
+      <div class="form-group">
+        <label>Amount (Max ₹{{ getPending() }})</label>
+        <input
+          type="number"
+          class="form-input"
+          [formControl]="$any(feeForm.get('amount'))"
+          placeholder="Enter amount"
+          min="1"
+          [max]="getPending()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Payment Method</label>
+        <div class="method-options">
+          <button
+            *ngFor="let method of paymentMethods"
+            class="method-btn"
+            [class.active]="feeForm.get('paymentMethod')?.value === method"
+            (click)="feeForm.get('paymentMethod')?.setValue(method)"
+            type="button"
+          >
+            {{ method }}
+          </button>
+        </div>
+      </div>
+
+      <div class="error-msg" *ngIf="errorMessage">⚠ {{ errorMessage }}</div>
+      <div class="success-msg" *ngIf="successMessage">{{ successMessage }}</div>
+
+      <button
+        class="submit-btn"
+        (click)="submit()"
+        [disabled]="submitting || feeForm.invalid"
+      >
+        {{ submitting ? 'Processing...' : '💳 Collect Payment' }}
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<!-- <div class="screen-wrapper">
+  <div class="mobile-screen">
+
+    
+    <div class="header">
+      <div class="logo-container">
+        <img src="/gls_logo.png" alt="GLS Logo">
+      </div>
+
+      <h1>Fees Manager</h1>
+      <p>GLS University – Fee Management System</p>
+    </div>
+
+    
+    <div class="content">
+
+      <h2>Welcome back!</h2>
+      <p class="subtitle">Sign in to continue managing fees</p>
+
+      <div class="input-box">
+        <span class="icon">✉</span>
+        <input type="email" placeholder="Email Address" [(ngModel)]="email">
+      </div>
+
+      <div class="input-box">
+        <span class="icon">🔒</span>
+        <input type="password" placeholder="Password" [(ngModel)]="password">
+        <span class="eye">👁</span>
+      </div>
+
+      <button class="login-btn" (click)="login()" [disabled]="loading">
+        <span *ngIf="!loading">Sign In</span>
+        <span *ngIf="loading" class="loader"></span>
+      </button>
+
+      <div class="bottom-text">
+        Don't have an account?
+        <span routerLink="/register">Create Account</span>
+      </div>
+
+      <div class="footer">
+        Promoted by Gujarat Law Society Since 1927
+      </div>
+
+    </div>
+
+  </div>
+</div> -->
+
+
+
+
+
+
+
+
+<div class="login-page">
+
+  <!-- LEFT SIDE -->
+  <div class="left-panel">
+    <div class="brand">
+      <img src="/gls_logo.png" alt="GLS Logo">
+      <h1>Fees Manager</h1>
+      <p>GLS University – Fee Management System</p>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="right-panel">
+    <div class="form-card">
+
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Sign in to continue</p>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" [(ngModel)]="email">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <div class="password-box">
+          <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password">
+          <span class="eye-icon" (click)="showPassword = !showPassword">
+            {{ showPassword ? '🔓' : '👁️' }}
+          </span>
+        </div>
+      </div>
+
+      <button (click)="login()" [disabled]="loading">
+        <span *ngIf="!loading">Sign In</span>
+        <span *ngIf="loading" class="loader"></span>
+      </button>
+
+      <div class="bottom-link">
+        Don’t have an account?
+        <span routerLink="/register">Create Account</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>

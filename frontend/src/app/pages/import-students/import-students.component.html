@@ -1,0 +1,102 @@
+<div class="import-container">
+  <h1>Import Students</h1>
+  <p class="description">Upload a CSV file to bulk import student records into the system.</p>
+
+  <div class="import-section">
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- File Upload Card -->
+    <div class="upload-card">
+      <div class="upload-area">
+        <div class="upload-icon">📁</div>
+        <h2>Choose CSV File</h2>
+        <p>Select a CSV file from your computer</p>
+        
+        <input
+          type="file"
+          accept=".csv"
+          (change)="onFileSelected($event)"
+          class="file-input"
+          id="fileInput"
+        />
+        <label for="fileInput" class="file-label">
+          Choose File
+        </label>
+
+        <div *ngIf="selectedFile" class="selected-file">
+          <p>✓ Selected: {{ selectedFile.name }}</p>
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="options">
+        <button 
+          (click)="downloadTemplate()" 
+          class="btn btn-secondary"
+          type="button"
+        >
+          📥 Download CSV Template
+        </button>
+      </div>
+
+      <!-- Upload Button -->
+      <div class="action-buttons">
+        <button 
+          (click)="uploadFile()" 
+          class="btn btn-primary"
+          [disabled]="!selectedFile || loading"
+          type="button"
+        >
+          {{ loading ? 'Uploading...' : '⬆️ Upload & Import' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Details -->
+    <div *ngIf="showErrors && importErrors.length > 0" class="error-details">
+      <h3>Validation Errors ({{ importErrors.length }} rows)</h3>
+      <p *ngIf="validCount > 0" class="info">{{ validCount }} row(s) were valid and can be imported after fixing errors.</p>
+      
+      <div class="error-list">
+        <div *ngFor="let error of importErrors" class="error-item">
+          <p class="error-row">Row {{ error.row }} - {{ error.email }}</p>
+          <ul>
+            <li *ngFor="let err of error.errors" class="error-text">{{ err }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <button 
+        (click)="retryUpload()" 
+        class="btn btn-secondary"
+        type="button"
+      >
+        🔄 Try Again
+      </button>
+    </div>
+
+    <!-- CSV Template Info -->
+    <div class="template-info">
+      <h3>CSV Format Required</h3>
+      <p>Your CSV file must include the following columns:</p>
+      <ul>
+        <li><strong>name</strong> - Student's full name (required)</li>
+        <li><strong>email</strong> - Student's email address (required)</li>
+        <li><strong>phone</strong> - Student's phone number (required, min 10 digits)</li>
+        <li><strong>course</strong> - Course name (required)</li>
+        <li><strong>semester</strong> - Semester number (optional)</li>
+        <li><strong>dueDate</strong> - Due date in DD-MM-YYYY format (optional)</li>
+        <li><strong>totalFees</strong> - Total fee amount (required, numeric)</li>
+        <li><strong>paid</strong> - Amount already paid (optional, numeric)</li>
+      </ul>
+    </div>
+  </div>
+</div>

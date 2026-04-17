@@ -1,0 +1,145 @@
+<div class="analytics-wrapper">
+
+  <div class="analytics-content">
+    <app-topbar title="Analytics"></app-topbar>
+
+    <div class="analytics-body">
+
+      <div *ngIf="loading" class="loading-screen">Loading analytics...</div>
+
+      <div *ngIf="!loading && data" class="analytics-page">
+
+        <!-- HEADER -->
+        <div class="page-header">
+          <div>
+            <h2>Analytics</h2>
+            <p class="page-sub">Overview of fee collection and student status</p>
+          </div>
+          <button (click)="exportFeesAsCSV()" class="export-btn" title="Export fees to CSV" type="button">
+            📥 Export Fees
+          </button>
+        </div>
+
+        <!-- OVERVIEW CARDS -->
+        <div class="overview-grid">
+          <div class="ov-card blue">
+            <div class="ov-icon">👥</div>
+            <div class="ov-text">
+              <p class="ov-label">Total Students</p>
+              <p class="ov-value">{{ data.totalStudents }}</p>
+            </div>
+          </div>
+          <div class="ov-card green">
+            <div class="ov-icon">✅</div>
+            <div class="ov-text">
+              <p class="ov-label">Fully Paid</p>
+              <p class="ov-value">{{ data.fullyPaid }}</p>
+            </div>
+          </div>
+          <div class="ov-card red">
+            <div class="ov-icon">⚠️</div>
+            <div class="ov-text">
+              <p class="ov-label">Overdue</p>
+              <p class="ov-value">{{ data.overdue }}</p>
+            </div>
+          </div>
+          <div class="ov-card orange">
+            <div class="ov-icon">💰</div>
+            <div class="ov-text">
+              <p class="ov-label">Pending Amount</p>
+              <p class="ov-value orange-val">{{ formatAmount(data.totalPending) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLECTION RATE -->
+        <div class="section-title">Collection Rate</div>
+        <div class="collection-card">
+          <div class="collection-left">
+            <p class="col-label">Total Collected</p>
+            <h2 class="col-amount">{{ formatAmount(data.totalCollected) }}</h2>
+            <div class="col-progress-track">
+              <div class="col-progress-fill" [style.width.%]="data.collectionRate"></div>
+            </div>
+            <p class="col-sub">{{ formatAmount(data.totalCollected) }} collected of {{ formatAmount(data.totalFees) }}
+              total</p>
+          </div>
+          <div class="donut-wrap">
+            <canvas #donutChart></canvas>
+            <div class="donut-label">{{ data.collectionRate }}%</div>
+          </div>
+        </div>
+
+        <!-- MONTHLY + COURSE side by side -->
+        <div class="two-col">
+
+          <!-- MONTHLY COLLECTION -->
+          <div class="chart-card">
+            <div class="card-head">
+              <p class="card-title">Monthly Collection</p>
+              <p class="card-sub">Last 6 Months</p>
+            </div>
+            <canvas #barChart class="bar-canvas"></canvas>
+          </div>
+
+          <!-- STUDENT STATUS -->
+          <div class="status-card">
+            <div class="card-head">
+              <p class="card-title">Student Status</p>
+              <p class="card-sub">Distribution</p>
+            </div>
+            <div class="status-body">
+              <div class="status-donut-wrap">
+                <canvas #statusDonut></canvas>
+                <div class="donut-center-label">{{ data.collectionRate }}%</div>
+              </div>
+              <div class="status-legend">
+                <div class="legend-item">
+                  <span class="legend-dot green"></span>
+                  <span class="legend-label">Fully Paid</span>
+                  <span class="legend-count">{{ data.fullyPaid }}</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot orange"></span>
+                  <span class="legend-label">Partial</span>
+                  <span class="legend-count">{{ data.partial }}</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot red"></span>
+                  <span class="legend-label">Overdue</span>
+                  <span class="legend-count">{{ data.overdue }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- COURSE BREAKDOWN -->
+        <div class="section-title">Course-wise Breakdown</div>
+        <div class="course-list">
+          <div class="course-card" *ngFor="let c of data.courseBreakdown">
+            <div class="course-top">
+              <div class="course-icon">📘</div>
+              <div class="course-info">
+                <p class="course-name">{{ c.course }}</p>
+                <p class="course-students">{{ c.students }} student{{ c.students > 1 ? 's' : '' }}</p>
+              </div>
+              <span class="course-percent" [style.color]="getCourseColor(c.percent)">{{ c.percent }}%</span>
+            </div>
+            <div class="course-progress-track">
+              <div class="course-progress-fill" [style.width.%]="c.percent"
+                [style.background]="getCourseColor(c.percent)">
+              </div>
+            </div>
+            <div class="course-amounts">
+              <span class="collected">Collected: {{ formatAmount(c.collected) }}</span>
+              <span class="pending-amt">Pending: {{ formatAmount(c.pending) }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

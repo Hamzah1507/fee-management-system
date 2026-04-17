@@ -1,0 +1,101 @@
+<div class="details-wrapper">
+  <div *ngIf="loading" class="loading-screen">Loading...</div>
+
+  <!-- DELETE MODAL -->
+  <div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <div class="modal-icon">🗑️</div>
+      <h3>Delete Student?</h3>
+      <p>This will permanently delete <strong>{{ student?.name }}</strong> and all their payment records.</p>
+      <div class="modal-actions">
+        <button class="modal-cancel" (click)="cancelDelete()">Cancel</button>
+        <button class="modal-confirm" (click)="deleteStudent()" [disabled]="deleting">
+          {{ deleting ? 'Deleting...' : 'Yes, Delete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && student" class="details-page">
+
+    <!-- HEADER -->
+    <div class="details-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h2>Student Details</h2>
+      <div class="header-actions">
+        <button class="delete-btn" (click)="confirmDelete()">🗑 Remove</button>
+      </div>
+    </div>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <div class="avatar" [class]="'avatar-' + getStatus()">{{ getInitials(student.name) }}</div>
+      <div class="profile-info">
+        <h2 class="profile-name">{{ student.name }}</h2>
+        <p class="profile-meta">{{ student.course }}<span *ngIf="student.semester"> · Semester {{ student.semester }}</span></p>
+        <p class="profile-email">{{ student.email }}</p>
+      </div>
+      <span class="status-badge" [class]="'badge-' + getStatus()">{{ getStatusLabel() }}</span>
+    </div>
+
+    <!-- FEE SUMMARY -->
+    <div class="fee-summary-card">
+      <p class="summary-title">Fee Summary</p>
+      <div class="summary-row">
+        <div class="summary-item">
+          <p class="summary-label">Total</p>
+          <p class="summary-value">₹{{ student.totalFees || 0 }}</p>
+        </div>
+        <div class="summary-item">
+          <p class="summary-label">Paid</p>
+          <p class="summary-value paid-val">₹{{ student.paidFees || 0 }}</p>
+        </div>
+        <div class="summary-item">
+          <p class="summary-label">Pending</p>
+          <p class="summary-value pending-val">₹{{ getPending() }}</p>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [class]="'fill-' + getStatus()" [style.width.%]="getPaidPercent()"></div>
+      </div>
+      <p class="progress-label">{{ getPaidPercent() }}% of total fees collected</p>
+    </div>
+
+    <!-- INFO TILES -->
+    <div class="info-tiles">
+      <div class="info-tile">
+        <span class="tile-icon">📋</span>
+        <p class="tile-value">{{ payments.length }}</p>
+        <p class="tile-label">Transactions</p>
+      </div>
+      <div class="info-tile" *ngIf="student.dueDate">
+        <span class="tile-icon">📅</span>
+        <p class="tile-value">{{ student.dueDate | date:'d/M/yyyy' }}</p>
+        <p class="tile-label">Due Date</p>
+      </div>
+      <div class="info-tile">
+        <span class="tile-icon">📧</span>
+        <p class="tile-value email-val">{{ student.email || '—' }}</p>
+        <p class="tile-label">Email</p>
+      </div>
+      <div class="info-tile">
+        <span class="tile-icon">📞</span>
+        <p class="tile-value">{{ student.phone || '—' }}</p>
+        <p class="tile-label">Phone</p>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions-section">
+      <h3>Actions</h3>
+      <button class="action-btn primary" (click)="collectFee()">💳 Collect Fee</button>
+      <button class="action-btn secondary" (click)="viewPaymentHistory()">🕐 View Payment History</button>
+      <button class="action-btn receipt" (click)="downloadLastReceipt()" [disabled]="!payments.length">
+        📄 Download Last Receipt
+      </button>
+      <button class="action-btn edit" (click)="editStudent()">✏️ Edit Student</button>
+      <button class="action-btn danger" (click)="confirmDelete()">🗑 Remove Student</button>
+    </div>
+
+  </div>
+</div>

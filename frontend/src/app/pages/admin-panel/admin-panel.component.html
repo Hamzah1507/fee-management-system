@@ -1,0 +1,184 @@
+<div class="admin-wrapper">
+  <div class="admin-content">
+    <app-topbar title="Admin Panel"></app-topbar>
+    <div class="admin-body">
+      
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Admin Dashboard</h1>
+          <p class="page-sub">Welcome back, {{ adminName }}</p>
+        </div>
+      </div>
+
+      <!-- OVERVIEW GRID -->
+      <div class="overview-grid">
+        <div class="ov-card blue">
+          <div class="ov-header">
+            <div class="ov-icon">👥</div>
+          </div>
+          <div class="ov-content">
+            <div class="ov-value">{{ analytics?.totalStudents || 0 }}</div>
+            <div class="ov-label">Total Students</div>
+          </div>
+        </div>
+        <div class="ov-card green">
+          <div class="ov-header">
+            <div class="ov-icon">✅</div>
+          </div>
+          <div class="ov-content">
+            <div class="ov-value">{{ analytics?.fullyPaid || 0 }}</div>
+            <div class="ov-label">Fully Paid</div>
+          </div>
+        </div>
+        <div class="ov-card red">
+          <div class="ov-header">
+            <div class="ov-icon">⚠️</div>
+          </div>
+          <div class="ov-content">
+            <div class="ov-value">{{ analytics?.overdue || 0 }}</div>
+            <div class="ov-label">Overdue</div>
+          </div>
+        </div>
+        <div class="ov-card orange">
+          <div class="ov-header">
+            <div class="ov-icon">📈</div>
+          </div>
+          <div class="ov-content">
+            <div class="ov-value">{{ analytics?.collectionRate || 0 }}%</div>
+            <div class="ov-label">Collection Rate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW -->
+      <div class="bottom-row">
+
+        <!-- FINANCIAL & STATUS -->
+        <div class="section-card">
+          <div class="sc-header">
+            <h3>Financial Summary</h3>
+          </div>
+          <div class="sc-body">
+            <div class="financial-list">
+              <div class="fin-item">
+                <span class="fin-label">Total Fee Structure</span>
+                <span class="fin-value">{{ formatAmount(analytics?.totalFees || 0) }}</span>
+              </div>
+              <div class="fin-item">
+                <span class="fin-label">Total Collected</span>
+                <span class="fin-value positive">{{ formatAmount(analytics?.totalCollected || 0) }}</span>
+              </div>
+              <div class="fin-item">
+                <span class="fin-label">Total Pending</span>
+                <span class="fin-value negative">{{ formatAmount(analytics?.totalPending || 0) }}</span>
+              </div>
+              <div class="fin-item">
+                <span class="fin-label">Total Payments</span>
+                <span class="fin-value blue">{{ totalTransactions }} transactions</span>
+              </div>
+            </div>
+
+            <!-- STATUS BARS -->
+            <div style="padding: 0 24px 24px 24px;">
+              <h4 style="margin: 0 0 16px 0; font-size: 14px; font-weight: 700; color: #1e293b;">Collection Status</h4>
+              
+              <!-- Paid -->
+              <div class="status-row">
+                <div class="status-info">
+                  <div class="status-dot green-dot"></div>
+                  <span class="status-name">Fully Paid</span>
+                </div>
+                <span class="status-count">{{ analytics?.fullyPaid || 0 }}</span>
+              </div>
+              <div class="status-bar-track" style="margin-bottom: 16px;">
+                <div class="status-bar-fill green-fill" [style.width.%]="getPercent(analytics?.fullyPaid, analytics?.totalStudents)"></div>
+              </div>
+
+              <!-- Partial -->
+              <div class="status-row">
+                <div class="status-info">
+                  <div class="status-dot orange-dot"></div>
+                  <span class="status-name">Partial</span>
+                </div>
+                <span class="status-count">{{ analytics?.partial || 0 }}</span>
+              </div>
+              <div class="status-bar-track" style="margin-bottom: 16px;">
+                <div class="status-bar-fill orange-fill" [style.width.%]="getPercent(analytics?.partial, analytics?.totalStudents)"></div>
+              </div>
+
+              <!-- Overdue -->
+              <div class="status-row">
+                <div class="status-info">
+                  <div class="status-dot red-dot"></div>
+                  <span class="status-name">Overdue</span>
+                </div>
+                <span class="status-count">{{ analytics?.overdue || 0 }}</span>
+              </div>
+              <div class="status-bar-track">
+                <div class="status-bar-fill red-fill" [style.width.%]="getPercent(analytics?.overdue, analytics?.totalStudents)"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT COL -->
+        <div class="right-col">
+          
+          <!-- RECENT TRANSACTIONS -->
+          <div class="section-card">
+            <div class="sc-header">
+              <h3>Recent Transactions</h3>
+              <button class="btn-all" (click)="goTo('/payment-history')">View All</button>
+            </div>
+            <div class="sc-body">
+              <div class="transaction-list">
+                <div *ngIf="recentTransactions.length === 0" class="empty-state">No recent activity</div>
+                
+                <div class="transaction-item" *ngFor="let tx of recentTransactions">
+                  <div class="tx-left">
+                    <div class="tx-icon">{{ getInitials(tx.studentName) }}</div>
+                    <div class="tx-info">
+                      <span class="tx-name">{{ tx.studentName }}</span>
+                      <span class="tx-date">{{ tx.createdAt | date:'MMM d, h:mm a' }}</span>
+                    </div>
+                  </div>
+                  <div class="tx-right">
+                    <span class="tx-amount">₹{{ tx.amount }}</span>
+                    <span class="tx-status" 
+                          [ngClass]="{'completed': true }">Success</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK ACTIONS -->
+          <div class="section-card">
+            <div class="sc-header" style="border-bottom: none; padding-bottom: 0;">
+              <h3>Quick Actions</h3>
+            </div>
+            <div class="sc-body" style="padding: 20px;">
+              <div class="quick-actions">
+                <button class="qa-btn qa-blue" (click)="goTo('/add-student')">
+                  <span class="qa-icon">➕</span>
+                  Add Student
+                </button>
+                <button class="qa-btn qa-green" (click)="goTo('/analytics')">
+                  <span class="qa-icon">📊</span>
+                  Analytics
+                </button>
+                <button class="qa-btn qa-orange" (click)="goTo('/dashboard')">
+                  <span class="qa-icon">🏠</span>
+                  Dashboard
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

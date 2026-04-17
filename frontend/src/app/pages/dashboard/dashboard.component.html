@@ -1,0 +1,92 @@
+<div class="dashboard-wrapper">
+  <div class="dashboard-content">
+    <app-topbar title="Dashboard"></app-topbar>
+    <div class="dashboard-body">
+
+      <!-- HERO CARD -->
+      <div class="hero-card">
+        <div class="hero-left">
+          <p class="hero-label">Total Collected</p>
+          <h1 class="hero-amount">{{ formatAmount(totalCollection) }}</h1>
+          <p class="hero-sub">{{ collectionPercent }}% of {{ formatAmount(totalFees) }} collected</p>
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="collectionPercent"></div>
+          </div>
+        </div>
+        <div class="hero-badge">
+          <span class="badge-count">{{ totalStudents }}</span>
+          <span class="badge-label">Students</span>
+        </div>
+      </div>
+
+      <!-- MINI STATS -->
+      <div class="mini-stats">
+        <div class="mini-card">
+          <div class="mini-icon fees-icon">₹</div>
+          <div>
+            <p class="mini-label">Total Fees</p>
+            <p class="mini-value">{{ formatAmount(totalFees) }}</p>
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-icon pending-icon">!</div>
+          <div>
+            <p class="mini-label">Pending</p>
+            <p class="mini-value pending-val">{{ formatAmount(totalPending) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STUDENTS SECTION -->
+      <div class="students-section">
+        <div class="section-header">
+          <h2>Students</h2>
+          <button (click)="exportFeesAsCSV()" class="export-btn" title="Export fees to CSV" type="button">
+            📥 Export Fees
+          </button>
+          <!-- SEARCH BAR -->
+          <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search by name, course, email..."
+              [(ngModel)]="searchQuery" (input)="onSearch()" />
+            <button class="clear-btn" *ngIf="searchQuery" (click)="clearSearch()">✕</button>
+          </div>
+        </div>
+
+        <div *ngIf="loading" class="loading-state">Loading...</div>
+
+        <div *ngIf="!loading && students.length === 0 && !searchQuery" class="empty-state">
+          No students yet. <a routerLink="/add-student">Add one!</a>
+        </div>
+
+        <div *ngIf="!loading && students.length === 0 && searchQuery" class="empty-state">
+          No students found for "{{ searchQuery }}"
+        </div>
+
+        <div class="student-cards" *ngIf="!loading">
+          <div class="student-card" *ngFor="let s of students" (click)="goToStudent(s._id)">
+            <div class="card-top">
+              <div class="avatar" [class]="'avatar-' + getStatus(s)">{{ getInitials(s.name) }}</div>
+              <div class="card-info">
+                <h3 class="student-name">{{ s.name }}</h3>
+                <p class="student-meta">{{ s.course }}<span *ngIf="s.semester"> · Sem {{ s.semester }}</span></p>
+              </div>
+              <span class="status-badge" [class]="'badge-' + getStatus(s)">{{ getStatusLabel(s) }}</span>
+            </div>
+            <div class="due-warning" *ngIf="isDueSoon(s)">⚠ Due soon: {{ s.dueDate | date:'d MMM yyyy' }}</div>
+            <div class="fee-row">
+              <span class="fee-paid">₹{{ s.paidFees || 0 }} paid</span>
+              <span class="fee-due" *ngIf="getStatus(s) !== 'paid'">₹{{ (s.totalFees || 0) - (s.paidFees || 0) }}
+                due</span>
+            </div>
+            <div class="card-progress-track">
+              <div class="card-progress-fill" [class]="'fill-' + getStatus(s)" [style.width.%]="getPaidPercent(s)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

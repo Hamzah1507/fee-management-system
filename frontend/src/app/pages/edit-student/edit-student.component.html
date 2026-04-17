@@ -1,0 +1,58 @@
+<div class="edit-wrapper">
+  <div *ngIf="loading" class="loading-screen">Loading...</div>
+
+  <div *ngIf="!loading" class="edit-page">
+    <div class="page-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h2>Edit Student</h2>
+    </div>
+
+    <div class="form-card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" [formControl]="$any(studentForm.get('name'))" placeholder="Full Name" />
+        </div>
+        <div class="form-group">
+          <label>Course</label>
+          <input type="text" [formControl]="$any(studentForm.get('course'))" placeholder="Course" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [formControl]="$any(studentForm.get('email'))" placeholder="Email" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="text" [formControl]="$any(studentForm.get('phone'))" placeholder="Phone" />
+        </div>
+        <div class="form-group">
+          <label>Semester</label>
+          <input type="text" [formControl]="$any(studentForm.get('semester'))" placeholder="e.g. 3" />
+        </div>
+        <div class="form-group">
+          <label>Due Date</label>
+          <input type="date" [formControl]="$any(studentForm.get('dueDate'))" />
+        </div>
+        <div class="form-group">
+          <label>Total Fees (₹)</label>
+          <input type="number" [formControl]="$any(studentForm.get('totalFees'))" />
+        </div>
+        <div class="form-group">
+          <label>Paid Fees (₹)</label>
+          <input type="number" [formControl]="$any(studentForm.get('paidFees'))" />
+        </div>
+      </div>
+
+      <div class="remaining-box">
+        Remaining: <strong>₹{{ remaining }}</strong>
+      </div>
+
+      <div class="error-msg" *ngIf="errorMessage">⚠ {{ errorMessage }}</div>
+      <div class="success-msg" *ngIf="successMessage">{{ successMessage }}</div>
+
+      <button class="save-btn" (click)="submit()" [disabled]="saving || studentForm.invalid">
+        {{ saving ? 'Saving...' : '💾 Save Changes' }}
+      </button>
+    </div>
+  </div>
+</div>
