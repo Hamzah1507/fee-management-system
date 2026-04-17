@@ -1,0 +1,2 @@
+name,email,phone,course,totalFees,paid,dueDate
+Test Student,test@example.com,1234567890,Test Course,1000,500,2025-12-31

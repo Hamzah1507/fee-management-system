@@ -1,0 +1,4 @@
+name,course,semester,email,phone,totalFees,paid,dueDate
+Test Student 1,B.Tech CSE,1,test1@college.edu,9876543235,100000,50000,31-12-2024
+Test Student 2,B.Tech ECE,2,test2@college.edu,9876543236,100000,100000,31-12-2024
+Test Student 3,B.Tech IT,1,test3@college.edu,9876543237,100000,0,31-12-2024

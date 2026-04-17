@@ -1,0 +1,11 @@
+name,course,semester,email,phone,totalFees,paid,dueDate
+Akshay Kumar,B.Tech CSE,1,akshay.kumar@college.edu,9876543225,100000,0,31-12-2024
+Meera Patel,B.Tech ECE,2,meera.patel@college.edu,9876543226,100000,50000,31-12-2024
+Rohit Singh,B.Tech ME,3,rohit.singh@college.edu,9876543227,100000,100000,31-12-2024
+Simran Sharma,B.Tech IT,1,simran.sharma@college.edu,9876543228,100000,75000,31-12-2024
+Varun Gupta,B.Tech CE,2,varun.gupta@college.edu,9876543229,100000,25000,31-12-2024
+Zara Khan,B.Tech CSE,4,zara.khan@college.edu,9876543230,100000,100000,31-12-2024
+Harsh Verma,B.Tech ECE,1,harsh.verma@college.edu,9876543231,100000,60000,31-12-2024
+Isha Saxena,B.Tech IT,3,isha.saxena@college.edu,9876543232,100000,40000,31-12-2024
+Nikhil Reddy,B.Tech ME,2,nikhil.reddy@college.edu,9876543233,100000,90000,31-12-2024
+Priya Nair,B.Tech CSE,1,priya.nair@college.edu,9876543234,100000,0,31-12-2024

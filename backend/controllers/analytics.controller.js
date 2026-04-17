@@ -46,6 +46,32 @@ exports.getAnalytics = async (req, res) => {
       monthlyData.push({ label: monthNames[month - 1], amount: found ? found.total : 0 });
     }
 
+    // Recent Transactions
+    let recentTxDocs = await Payment.find()
+      .populate("student", "name course semester")
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    // Fallback: If no real payments, use students with paid fees (from import)
+    if (recentTxDocs.length === 0) {
+      const studentsWithFees = await Student.find({ paidFees: { $gt: 0 } }).sort({ updatedAt: -1 }).limit(5);
+      recentTxDocs = studentsWithFees.map(s => ({
+        amount: s.paidFees,
+        paymentMethod: 'Imported',
+        createdAt: s.updatedAt || new Date(),
+        student: s
+      }));
+    }
+
+    const recentTransactions = recentTxDocs.map(tx => ({
+      studentName: tx.student ? tx.student.name : "Unknown",
+      course: tx.student ? tx.student.course : "",
+      semester: tx.student ? tx.student.semester : "",
+      amount: tx.amount,
+      paymentMethod: tx.paymentMethod,
+      createdAt: tx.createdAt
+    }));
+
     // Course breakdown
     const courseMap = {};
     students.forEach(s => {
@@ -65,7 +91,7 @@ exports.getAnalytics = async (req, res) => {
     res.json({
       totalStudents, fullyPaid, partial, overdue,
       totalFees, totalCollected, totalPending, collectionRate,
-      monthlyData, courseBreakdown
+      monthlyData, courseBreakdown, recentTransactions
     });
 
   } catch (err) {
